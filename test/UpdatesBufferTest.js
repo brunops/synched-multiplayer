@@ -14,22 +14,16 @@ test(function (t) {
   };
   ub.add(msg);
 
-  t.equal(ub.dequeue(), msg);
+  t.equal(ub.getLast(), msg);
 
   msg = {
     payload: 'hey'
   };
   ub.add(msg);
-  t.notEqual(ub.dequeue().t, undefined, 't is always defined in a msg');
+  t.notEqual(ub.getLast().t, undefined, 't is always defined in a msg');
 
   ub = new UpdatesBuffer(100);
   t.equal(ub.latency, 100, 'updates buffer can be initialized with a latency value');
 
-  // msg = {
-  //   t: (new Date()).getTime(),
-  //   payload: 'bla'
-  // };
 
-  // ub.add(msg);
-  // t.equal(ub.dequeue(), null, 'take latency into consideration when retrieving last updates');
 });
