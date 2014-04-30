@@ -2,6 +2,10 @@
 
 Experiments to have a minimal but truly synchronized application.
 
+!!! STILL IN PROGRESS !!!
+
+..lots of exclamation points, so it must be important
+
 ###idea
 * server knows it all
 * server continuously broadcasts world updates to all clients
