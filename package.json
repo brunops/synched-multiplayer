@@ -1,0 +1,25 @@
+{
+  "name": "sync-multiplayer",
+  "version": "0.0.1",
+  "description": "Experiments to have a minimal but truly synchronized application.",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brunops/sync-multiplayer"
+  },
+  "author": "brunops",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brunops/sync-multiplayer/issues"
+  },
+  "homepage": "https://github.com/brunops/sync-multiplayer",
+  "devDependencies": {
+    "tape": "^2.12.3"
+  }
+}
