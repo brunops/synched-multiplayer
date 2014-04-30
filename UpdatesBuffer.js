@@ -21,10 +21,11 @@ UpdatesBuffer.prototype.getLastUpdates = function () {
     if (this.isUpdateReady(this.updates[i])
         && this.isUpdateReady(this.updates[i - 1])) {
 
-      // TODO: clear older updates
+      this.updates.splice(0, i - 1);
+
       return {
-        from: this.updates[i - 1],
-        to: this.updates[i]
+        from: this.updates[0],
+        to: this.updates[1]
       }
     }
   }

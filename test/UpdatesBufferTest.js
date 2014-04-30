@@ -3,7 +3,7 @@ var test = require('tape');
 var UpdatesBuffer = require('../UpdatesBuffer');
 
 test(function (t) {
-  t.plan(10);
+  t.plan(13);
 
   // ------- New buffer with 0ms latency
   var ub = new UpdatesBuffer();
@@ -57,4 +57,32 @@ test(function (t) {
   ub.add(msg2);
   ub.add(msg3);
   t.deepEqual(ub.getLastUpdates(), { from: msg, to: msg2 }, '#getLastUpdates takes latency into consideration and returns only updates where the timestamp has expired latency (although msg3 is the last update, it is not returned because its timestamp is not experied yet)');
+
+  // ------- New buffer with 100ms latency
+  ub = new UpdatesBuffer(150);
+  msg = {
+    t: (new Date()).getTime() - 200,
+    payload: 1
+  };
+  msg2 = {
+    t: (new Date()).getTime() - 190,
+    payload: 12
+  };
+  msg3 = {
+    t: (new Date()).getTime() - 180,
+    payload: 123
+  };
+  var msg4 = {
+    t: (new Date()).getTime() - 140,
+    payload: 1234
+  };
+  ub.add(msg);
+  ub.add(msg2);
+  ub.add(msg3);
+  ub.add(msg4);
+  t.equal(ub.size(), 4, '#size is 4');
+  t.deepEqual(ub.getLastUpdates(), { from: msg2, to: msg3 }, '#getLastUpdates returns last valid updates (msg2 and msg3)');
+  t.deepEqual(ub.size(), 3, '#getLastUpdates deletes older invalid messages');
+
+
 });
