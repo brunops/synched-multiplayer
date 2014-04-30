@@ -12,14 +12,14 @@ test(function (t) {
     t: (new Date()).getTime(),
     payload: 'sup, bro'
   };
-  ub.enqueue(msg);
+  ub.add(msg);
 
   t.equal(ub.dequeue(), msg);
 
   msg = {
     payload: 'hey'
   };
-  ub.enqueue(msg);
+  ub.add(msg);
   t.notEqual(ub.dequeue().t, undefined, 't is always defined in a msg');
 
   ub = new UpdatesBuffer(100);
@@ -30,7 +30,6 @@ test(function (t) {
   //   payload: 'bla'
   // };
 
-  // ub.enqueue(msg);
+  // ub.add(msg);
   // t.equal(ub.dequeue(), null, 'take latency into consideration when retrieving last updates');
-
 });

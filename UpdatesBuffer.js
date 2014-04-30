@@ -7,7 +7,7 @@ UpdatesBuffer.prototype.init = function (latency) {
   this.messages = [];
 };
 
-UpdatesBuffer.prototype.enqueue = function (msg) {
+UpdatesBuffer.prototype.add = function (msg) {
   msg.t = msg.t || Date.now();
   this.messages.push(msg)
 };
