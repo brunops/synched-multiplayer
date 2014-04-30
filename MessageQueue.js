@@ -1,11 +1,9 @@
-function MessageQueue(opts) {
-  this.init(opts);
+function MessageQueue(latency) {
+  this.init(latency);
 }
 
-MessageQueue.prototype.init = function (opts) {
-  opts = opts || {};
-
-  this.latency = opts.latency || 0;
+MessageQueue.prototype.init = function (latency) {
+  this.latency = latency || 0;
   this.messages = [];
 };
 
