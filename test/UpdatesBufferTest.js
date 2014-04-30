@@ -3,7 +3,7 @@ var test = require('tape');
 var UpdatesBuffer = require('../UpdatesBuffer');
 
 test(function (t) {
-  t.plan(4);
+  t.plan(6);
 
   var ub = new UpdatesBuffer();
   t.equal(ub.latency, 0);
@@ -24,6 +24,16 @@ test(function (t) {
 
   ub = new UpdatesBuffer(100);
   t.equal(ub.latency, 100, 'updates buffer can be initialized with a latency value');
+
+
+  t.equal(ub.getLastUpdates(), null, '#getLastUpdates returns null when there are less than 2 updates');
+
+  var msg2 = {
+    payload: 'payload'
+  };
+  ub.add(msg);
+  ub.add(msg2);
+  t.deepEqual(Object.keys(ub.getLastUpdates()), ['from', 'to'], '#getLastUpdates return object with keys "from" and "to"');
 
 
 });
