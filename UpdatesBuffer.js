@@ -32,6 +32,10 @@ UpdatesBuffer.prototype.getLastUpdates = function () {
   return null;
 };
 
+UpdatesBuffer.prototype.size = function () {
+  return this.updates.length;
+};
+
 UpdatesBuffer.prototype.isUpdateReady = function (update) {
   return true;
 };

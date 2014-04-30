@@ -3,7 +3,7 @@ var test = require('tape');
 var UpdatesBuffer = require('../UpdatesBuffer');
 
 test(function (t) {
-  t.plan(6);
+  t.plan(7);
 
   var ub = new UpdatesBuffer();
   t.equal(ub.latency, 0);
@@ -35,5 +35,5 @@ test(function (t) {
   ub.add(msg2);
   t.deepEqual(Object.keys(ub.getLastUpdates()), ['from', 'to'], '#getLastUpdates return object with keys "from" and "to"');
 
-
+  t.equal(ub.size(), 2, '#size returns current updates buffer size');
 });
