@@ -1,30 +1,36 @@
 var test = require('tape');
 
-var MessageQueue = require('../MessageQueue');
+var UpdatesBuffer = require('../UpdatesBuffer');
 
 test(function (t) {
   t.plan(4);
 
-  var mq = new MessageQueue();
-  t.equal(mq.latency, 0);
+  var ub = new UpdatesBuffer();
+  t.equal(ub.latency, 0);
 
   var msg = {
     t: (new Date()).getTime(),
     payload: 'sup, bro'
   };
-  mq.enqueue(msg);
+  ub.enqueue(msg);
 
-  t.equal(mq.dequeue(), msg);
+  t.equal(ub.dequeue(), msg);
 
-  // t is always defined in a msg
   msg = {
     payload: 'hey'
   };
-  mq.enqueue(msg);
-  t.notEqual(mq.dequeue().t, undefined);
+  ub.enqueue(msg);
+  t.notEqual(ub.dequeue().t, undefined, 't is always defined in a msg');
 
-  // message queues can be initialized with a latency value
-  mq = new MessageQueue(100);
-  t.equal(mq.latency, 100);
+  ub = new UpdatesBuffer(100);
+  t.equal(ub.latency, 100, 'updates buffer can be initialized with a latency value');
+
+  // msg = {
+  //   t: (new Date()).getTime(),
+  //   payload: 'bla'
+  // };
+
+  // ub.enqueue(msg);
+  // t.equal(ub.dequeue(), null, 'take latency into consideration when retrieving last updates');
 
 });
