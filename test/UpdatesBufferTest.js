@@ -3,7 +3,7 @@ var test = require('tape');
 var UpdatesBuffer = require('../UpdatesBuffer');
 
 test(function (t) {
-  t.plan(9);
+  t.plan(10);
 
   // ------- New buffer with 0ms latency
   var ub = new UpdatesBuffer();
@@ -49,5 +49,12 @@ test(function (t) {
   t.equal(ub.latency, 100, 'updates buffer can be initialized with a latency value');
   t.equal(ub.getLastUpdates(), null, '#getLastUpdates takes latency into consideration and returns only updates where the timestamp has expired latency');
 
-
+  // ------- New buffer with 100ms latency
+  ub = new UpdatesBuffer(100);
+  msg.t -= 100;
+  msg2.t -= 100;
+  ub.add(msg);
+  ub.add(msg2);
+  ub.add(msg3);
+  t.deepEqual(ub.getLastUpdates(), { from: msg, to: msg2 }, '#getLastUpdates takes latency into consideration and returns only updates where the timestamp has expired latency (although msg3 is the last update, it is not returned because its timestamp is not experied yet)');
 });
