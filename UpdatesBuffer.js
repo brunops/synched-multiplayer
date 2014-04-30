@@ -37,7 +37,9 @@ UpdatesBuffer.prototype.size = function () {
 };
 
 UpdatesBuffer.prototype.isUpdateReady = function (update) {
-  return true;
+  var now = (new Date()).getTime();
+
+  return now - update.t >= this.latency;
 };
 
 module.exports = UpdatesBuffer;
