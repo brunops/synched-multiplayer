@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var UpdatesBuffer = require('../UpdatesBuffer');
+var UpdatesBuffer = require('../js/UpdatesBuffer');
 
 test(function (t) {
 
