@@ -6,6 +6,8 @@ function Client(opts) {
 }
 
 Client.prototype.init = function (opts) {
+  this.context = opts.context;
+
   // temporary code to make things work :)
   // should be initialized only upon connection
   this.mainEntityId = 1;
@@ -72,5 +74,42 @@ Client.prototype.cloneKeyboardState = function () {
   return keyboardState;
 };
 
+Client.prototype.update = function () {
+  this.processInputs();
+  this.render();
+};
+
+Client.prototype.processInputs = function () {
+  var now = (new Date()).getTime(),
+      lastInputTime = this.lastInputTime || now,
+      deltaModifier = (now - lastInputTime) / 1000,
+      input = this.cloneKeyboardState();
+
+  this.lastInputTime = now;
+
+  if (!this.hasNewInput()) {
+    // nothing new to process, bro
+    return;
+  }
+
+  input.deltaModifier = deltaModifier;
+  this.entities[this.mainEntityId].applyInput(input);
+};
+
+Client.prototype.hasNewInput = function () {
+  return this.keyboardState.LEFT  ||
+         this.keyboardState.RIGHT ||
+         this.keyboardState.UP    ||
+         this.keyboardState.DOWN  ||
+         this.keyboardState.SPACE;
+};
+
+Client.prototype.render = function () {
+  this.context.clearRect(0, 0, this.width, this.height);
+
+  for (var entityId in this.entities) {
+    this.entities[entityId].render(this.context);
+  }
+};
 
 module.exports = Client;
