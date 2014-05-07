@@ -6,5 +6,16 @@ function Client(opts) {
 }
 
 Client.prototype.init = function (opts) {
-  this.ub = new UpdatesBuffer(100);
+  // temporary code to make things work :)
+  // should be initialized only upon connection
+  this.mainEntityId = 1;
+  this.entities = {};
+  this.entities[this.mainEntityId] = new Entity();
+
+  this.width = 500;
+  this.height = 500;
+  // ------------------------[end of temp code]
 };
+
+
+module.exports = Client;
